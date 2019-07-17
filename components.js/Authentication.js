@@ -44,7 +44,7 @@ export default class Authentication extends Component{
                 style = {{
                     alignItems : 'center',
                     justifyContent : 'center',
-                    width : 200,
+                    width : 300,
                     height : 50,
                     backgroundColor : '#19A3D2',
                     borderColor : 'gray',
@@ -62,32 +62,16 @@ export default class Authentication extends Component{
             </TouchableOpacity>
         )
     }
-    render()
-    {
-        return(
-            <View style = {styles.container}>
-                {this.renderText()}
-                <View style = {{
-                    marginLeft : 20,
-                }}>
-                    {this.renderTextInput('email@example.com')}
-                    {this.renderTextInput('password')}
-                </View>
-                {this.renderButton('Sign In')}
-            </View>
-           
-            
-        )
-    }
     renderTextInput(placeHolderText)
     {
         return(
             <View style = {{
                 flexDirection : 'row',
-                justifyContent : 'center',
+                justifyContent : 'flex-start',
                 alignItems : 'center',
                 borderBottomColor : 'gray',
-                borderBottomWidth : 1
+                borderBottomWidth : 1,
+                width : 300,
             }}>
                 <Text style = {{
                     marginRight : 20,
@@ -100,10 +84,9 @@ export default class Authentication extends Component{
                         paddingBottom : 0,
                         paddingTop : 0,
                         width : 200,
-                        height : 50,
+                        height : 40,
                         
                     }}
-                    keyboardAppearance
                     autoFocus = {true}
                     placeholder = {placeHolderText}
                     onChangeText = {
@@ -119,6 +102,32 @@ export default class Authentication extends Component{
             
         )
     }
+    render()
+    {
+        return(
+            <View style = {styles.container}>
+                <View style = {{flex : 4, justifyContent : 'flex-end'}}>
+                    {this.renderText()}
+                </View>
+                
+                <View style = {{
+                    marginLeft : 20,
+                    flex : 1
+                }}>
+                    {this.renderTextInput('email@example.com')}
+                    {this.renderTextInput('password')}
+                </View>
+                <View
+                style = {{flex : 5, justifyContent : 'flex-start'}}>
+                    {this.renderButton('Sign In')}
+                </View>
+                
+            </View>
+           
+            
+        )
+    }
+    
 }
 styles = StyleSheet.create(
     {
