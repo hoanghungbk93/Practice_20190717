@@ -1,18 +1,22 @@
 import React ,{Component} from 'react'
 import {Text, View, TextInput, TouchableOpacity, StyleSheet, Alert, Dimensions, Keyboard,
     KeyboardAvoidingView} from 'react-native'
+import { createStackNavigator, createAppContainer, createSwitchNavigator} from 'react-navigation';
 screenWidth = Dimensions.get('window').width
 screenHeight = Dimensions.get('window').height
 const userName = 'Hung'
 const pass = '1234'
 export default class Authentication extends Component{
+    static navigationOptions = {
+        header: null
+    }
     constructor(props)
     {
         super(props);
         this.state = {
             username : '',
             password : '',
-            security : false
+            security : true
         }
         this.onPressLoginButton = this.onPressLoginButton.bind(this)
         this.onPressHide = this.onPressHide.bind(this)
@@ -30,9 +34,9 @@ export default class Authentication extends Component{
     }
     onPressLoginButton()
     {
-        if(this.state.username == userName && this.state.password === pass)
+        if(this.state.username === userName && this.state.password === pass)
         {
-            Alert.alert('login success')
+            this.props.navigation.navigate('home', {email : this.state.username})
         }
         else{
             Alert.alert('login fail')
@@ -49,14 +53,11 @@ export default class Authentication extends Component{
                     width : 300,
                     height : 50,
                     backgroundColor : '#19A3D2',
-                    borderColor : 'gray',
-                    borderRadius : 10,
-                    borderWidth : 1,
                     marginTop : 20  
                 }}
             >
                 <Text style = {{
-                    fontSize : 25,
+                    fontSize : 20,
                     color : 'white',
                 }}>
                     {buttonName}
@@ -88,10 +89,10 @@ export default class Authentication extends Component{
                         paddingTop : 0,
                         width : 200,
                         height : 40,
-                        
+                        color : 'white',
                     }}
                     secureTextEntry={isEmail ? false : this.state.security }
-                    autoFocus = {true}
+                    autoFocus
                     placeholder = {placeHolderText}
                     onChangeText = {
                         (text) =>
@@ -109,7 +110,7 @@ export default class Authentication extends Component{
     }
     renderHideButton(hide)
     {
-        if(hide === true)
+        if(hide)
         {
             return(
                 <TouchableOpacity 
@@ -135,12 +136,11 @@ export default class Authentication extends Component{
     {
         return(
             <View style = {styles.container}>
-                <View style = {{flex : 4, justifyContent : 'flex-end'}}>
+                <View style = {{marginTop : screenHeight/4, marginBottom : 50}}>
                     {this.renderText()}
                 </View>
                 
                 <View style = {{
-                    marginLeft : 20,
                     flex : 1
                 }}>
                     {this.renderTextInput('email@example.com', false)}
@@ -169,7 +169,6 @@ styles = StyleSheet.create(
         text : {
             fontSize : 24,
             color : 'white',
-            marginTop : screenHeight / 10
         }
     }
 )

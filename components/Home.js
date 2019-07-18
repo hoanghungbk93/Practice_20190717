@@ -4,8 +4,12 @@ import {Text, View, TextInput, TouchableOpacity, StyleSheet, Alert, Dimensions, 
 import Icon from "react-native-vector-icons/Entypo";
 import Ic from 'react-native-vector-icons/Ionicons'
 import Ic1 from 'react-native-vector-icons/MaterialCommunityIcons'
-screenHeight = Dimensions.get('window').height
-screenWidth = Dimensions.get('window').width
+import { createStackNavigator, createAppContainer , createSwitchNavigator} from 'react-navigation';
+
+const screenHeight = Dimensions.get('window').height
+const screenWidth = Dimensions.get('window').width
+
+
 class MyListItem extends Component
 {
     constructor(props)
@@ -14,6 +18,7 @@ class MyListItem extends Component
     }
     render()
     {
+        const { icon } = this.props
         return(
             <View style = {{width : screenWidth/4, 
                             height : screenWidth/4, 
@@ -27,8 +32,8 @@ class MyListItem extends Component
             }}>
             <TouchableOpacity style ={{}}>
             <Ic1
-                name={this.props.icon.name}
-                color={this.props.icon.color}
+                name={icon.name}
+                color={icon.color}
                 size={25}
                 />
             </TouchableOpacity>
@@ -38,6 +43,9 @@ class MyListItem extends Component
 }
 export default class Home extends Component
 {
+    // static navigationOptions = {
+    //     header: null
+    // }
     constructor(props)
     {
         super(props)
@@ -47,15 +55,19 @@ export default class Home extends Component
     }
     renderTop()
     {
+        const itemId = this.props.navigation.getParam('email');
+        console.log(`hello ${itemId}`)
         return(
             <View style = {{flexDirection : 'row', 
-                    marginTop : 70, 
                     alignItems : 'baseline', 
                     justifyContent : 'flex-start', 
                     backgroundColor : '#534C9C',
                     height : screenHeight / 4
                 }}
             >
+                <View
+                style = {{marginTop : 70}}
+                ></View>
                 <TouchableOpacity style ={{marginRight : 20, marginLeft : 20}}>
                 <Icon
                     name="menu"
