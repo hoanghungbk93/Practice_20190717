@@ -1,7 +1,8 @@
 import React ,{Component} from 'react'
 import {Text, View, TextInput, TouchableOpacity, Alert, Dimensions} from 'react-native'
-screenWidth = Dimensions.get('window').width
-screenHeight = Dimensions.get('window').height
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import {screenHeight, screenWidth} from '../Consts'
+
 import {
     userName,
     pass
@@ -9,8 +10,16 @@ import {
 import {styles} from '../style/AuthenticationStyle'
 export default class Authentication extends Component{
     static navigationOptions = {
+        drawerLabel: 'Logout',
+        drawerIcon: ({ tintColor }) => (
+          <MaterialCommunityIcons
+            name="logout"
+            color="yellow"
+            size={25}
+          />
+        ),
         header: null
-    }
+      }
     constructor(props)
     {
         super(props);
@@ -67,6 +76,8 @@ export default class Authentication extends Component{
                     secureTextEntry={isEmail ? false : this.state.security }
                     autoFocus
                     placeholder = {placeHolderText}
+                    placeholderTextColor = 'gray'
+                    autoCapitalize = 'none'
                     onChangeText = {
                         (text) =>
                         {

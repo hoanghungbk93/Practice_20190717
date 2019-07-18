@@ -8,6 +8,7 @@ import {styles} from '../style/HomeStyle'
 
 class MyListItem extends Component
 {
+    
     constructor(props)
     {
         super(props)
@@ -28,16 +29,57 @@ class MyListItem extends Component
         )
     }
 }
+class TwiteerListItem extends Component
+{
+    
+    constructor(props)
+    {
+        super(props)
+        this.onPressItem = this.onPressItem.bind(this)
+    }
+    onPressItem(title)
+    {
+        this.props.parent.props.navigation.navigate('detail', {
+            content : title
+        })
+    }
+    render()
+    {
+        const { index } = this.props
+        return(
+            <View style = {styles.twiteerListItem}>
+            <TouchableOpacity 
+                onPress = {() => {this.onPressItem(this.props.item.title)}}
+            >
+            <Text>
+                {this.props.item.title}
+            </Text>
+            </TouchableOpacity>
+            </View>
+        )
+    }
+}
 export default class Home extends Component
 {
     // static navigationOptions = {
     //     header: null
     // }
+    static navigationOptions = {
+        drawerLabel: 'Home',
+        drawerIcon: ({ tintColor }) => (
+          <IoniconsIcon
+            name="md-home"
+            color="green"
+            size={25}
+          />
+        ),
+      }
     constructor(props)
     {
         super(props)
         this.state = {
-            userEmail : ''
+            userEmail : '',
+            twitter : []
         }
         this.openDrawer = this.openDrawer.bind(this)
     }
@@ -111,6 +153,33 @@ export default class Home extends Component
             </FlatList>
         )
     }
+    renderBottom()
+    {
+        return(
+            <FlatList
+                data = {this.state.twitter}
+                renderItem = {({item, index}) =>
+                (
+                    <TwiteerListItem item = {item} index = {index} parent = {this}>
+                    </TwiteerListItem>
+                )
+                }
+                numColumns = {1}
+            >
+            </FlatList>
+        )
+    }
+    componentDidMount()
+    {
+        fetch("https://jsonplaceholder.typicode.com/todos")
+        .then(response => response.json())
+        .then(json => {
+          console.log(json)
+          this.setState({
+              twitter : json
+          })
+        });
+    }
     render()
     {
         return(
@@ -118,7 +187,11 @@ export default class Home extends Component
                 {this.renderTop()}
                 <View style = {styles.mid}>
                     {this.renderMidler()}
-                </View>               
+                </View>
+                <Text style = {styles.switterFeedsText}>
+                    Twitter Feeds
+                </Text>  
+                {this.renderBottom()}             
             </View>
         )
     }

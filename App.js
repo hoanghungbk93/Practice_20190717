@@ -3,14 +3,28 @@ import { View, Text, TouchableOpacity} from "react-native";
 import { createAppContainer, createSwitchNavigator, createDrawerNavigator} from "react-navigation";
 import Home from './components/Home'
 import Icon from "react-native-vector-icons/Entypo"
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import Authentication from './components/Authentication'
 
 class Detail extends Component
 {
+  static navigationOptions = {
+    drawerLabel: 'Detail',
+    drawerIcon: ({ tintColor }) => (
+      <MaterialCommunityIcons
+        name="details"
+        color="red"
+        size={25}
+      />
+    ),
+  }
   constructor(props)
   {
     super(props)
     this.openDrawer = this.openDrawer.bind(this)
+    this.state = {
+      content : ''
+    }
   }
   openDrawer()
   {
@@ -18,6 +32,8 @@ class Detail extends Component
   }
   render()
   {
+    const {navigation} = this.props
+    const content = navigation.getParam('content')
     return(
         <View style = {{
                     flex : 1,
@@ -44,6 +60,13 @@ class Detail extends Component
                 >
                   Detail
                 </Text>
+                <Text style = {{
+                    fontSize : 25,
+                    color : 'white',
+                    marginTop : 170
+                  }}>
+                  {content}
+                </Text>
           </View>
     )
   }
@@ -51,7 +74,8 @@ class Detail extends Component
 const DrawerStack = createDrawerNavigator(
   {
     home : Home,
-    detail : Detail
+    detail : Detail,
+    logout : Authentication
   },
   {
     drawerPosition : "left"

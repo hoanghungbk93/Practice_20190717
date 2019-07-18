@@ -45,6 +45,20 @@ export const styles = StyleSheet.create(
             backgroundColor : "#F9F7FF", 
             height : screenHeight / 3, 
             alignItems : 'center', 
-            justifyContent : 'center'}
+            justifyContent : 'center'
+        },
+        switterFeedsText : 
+        {
+            fontSize : 30,
+            color : '#534C9C',
+            marginTop : 20
+        },
+        twiteerListItem :
+        {
+            borderBottomColor : 'gray',
+            borderBottomWidth : 1,
+            marginTop : 10,
+            marginBottom : 10
+        }
     }
 )
