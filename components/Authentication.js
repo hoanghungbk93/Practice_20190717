@@ -11,9 +11,11 @@ export default class Authentication extends Component{
         super(props);
         this.state = {
             username : '',
-            password : ''
+            password : '',
+            security : false
         }
         this.onPressLoginButton = this.onPressLoginButton.bind(this)
+        this.onPressHide = this.onPressHide.bind(this)
     }
     componentDidMount(){
         // Keyboard.dismiss();
@@ -62,8 +64,9 @@ export default class Authentication extends Component{
             </TouchableOpacity>
         )
     }
-    renderTextInput(placeHolderText)
+    renderTextInput(placeHolderText, hide)
     {
+        const isEmail = placeHolderText === 'email@example.com'
         return(
             <View style = {{
                 flexDirection : 'row',
@@ -77,7 +80,7 @@ export default class Authentication extends Component{
                     marginRight : 20,
                     fontSize : 25,
                     color : 'white'
-                }}>{placeHolderText === 'email@example.com' ? 'E' : 'P'}</Text>
+                }}>{isEmail ? 'E' : 'P'}</Text>
                 <TextInput
                     style = {{
                         fontSize : 20,
@@ -87,20 +90,46 @@ export default class Authentication extends Component{
                         height : 40,
                         
                     }}
+                    secureTextEntry={isEmail ? false : this.state.security }
                     autoFocus = {true}
                     placeholder = {placeHolderText}
                     onChangeText = {
                         (text) =>
                         {
-                            placeHolderText === 'email@example.com' ? this.setState({username : text}) : this.setState({password : text})
+                            isEmail ? this.setState({username : text}) : this.setState({password : text})
                         }
                     }
                 >
 
                 </TextInput>
+                {this.renderHideButton(hide)}
             </View>
             
         )
+    }
+    renderHideButton(hide)
+    {
+        if(hide === true)
+        {
+            return(
+                <TouchableOpacity 
+                    style ={{marginLeft : 35, alignContent : 'flex-end'}}
+                    onPress = {this.onPressHide}
+                >
+                    <Text style ={{color : '#19A3D2'}}>
+                        {!this.state.security ? 'Hide' : 'Show'}
+                    </Text>
+                </TouchableOpacity>
+            )
+        }
+        else
+        {
+            return null
+        }
+    }
+    onPressHide()
+    {
+        this.setState(previousState => ({security : !previousState.security}))
     }
     render()
     {
@@ -114,17 +143,15 @@ export default class Authentication extends Component{
                     marginLeft : 20,
                     flex : 1
                 }}>
-                    {this.renderTextInput('email@example.com')}
-                    {this.renderTextInput('password')}
+                    {this.renderTextInput('email@example.com', false)}
+                    {this.renderTextInput('password', true)}
                 </View>
                 <View
                 style = {{flex : 5, justifyContent : 'flex-start'}}>
                     {this.renderButton('Sign In')}
                 </View>
                 
-            </View>
-           
-            
+            </View>    
         )
     }
     
