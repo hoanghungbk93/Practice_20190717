@@ -4,7 +4,7 @@ import {Text, View, TextInput, TouchableOpacity, StyleSheet, Alert, Dimensions, 
 import Icon from "react-native-vector-icons/Entypo";
 import Ic from 'react-native-vector-icons/Ionicons'
 import Ic1 from 'react-native-vector-icons/MaterialCommunityIcons'
-import { createStackNavigator, createAppContainer , createSwitchNavigator} from 'react-navigation';
+import { createStackNavigator, createAppContainer , createSwitchNavigator, createDrawerNavigator} from 'react-navigation';
 
 const screenHeight = Dimensions.get('window').height
 const screenWidth = Dimensions.get('window').width
@@ -52,6 +52,11 @@ export default class Home extends Component
         this.state = {
             userEmail : ''
         }
+        this.openDrawer = this.openDrawer.bind(this)
+    }
+    openDrawer()
+    {
+        this.props.navigation.openDrawer()
     }
     renderTop()
     {
@@ -68,7 +73,9 @@ export default class Home extends Component
                 <View
                 style = {{marginTop : 70}}
                 ></View>
-                <TouchableOpacity style ={{marginRight : 20, marginLeft : 20}}>
+                <TouchableOpacity style ={{marginRight : 20, marginLeft : 20}}
+                    onPress = { ()=> {this.openDrawer()}}
+                >
                 <Icon
                     name="menu"
                     color="white"
@@ -147,3 +154,9 @@ export default class Home extends Component
         )
     }
 }
+
+styles = StyleSheet.create(
+    {
+        
+    }
+)

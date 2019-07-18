@@ -47,19 +47,9 @@ export default class Authentication extends Component{
         return(
             <TouchableOpacity 
                 onPress = {this.onPressLoginButton}
-                style = {{
-                    alignItems : 'center',
-                    justifyContent : 'center',
-                    width : 300,
-                    height : 50,
-                    backgroundColor : '#19A3D2',
-                    marginTop : 20  
-                }}
+                style = {styles.loginButton}
             >
-                <Text style = {{
-                    fontSize : 20,
-                    color : 'white',
-                }}>
+                <Text style = {styles.textLogin}>
                     {buttonName}
                 </Text>
             </TouchableOpacity>
@@ -69,28 +59,10 @@ export default class Authentication extends Component{
     {
         const isEmail = placeHolderText === 'email@example.com'
         return(
-            <View style = {{
-                flexDirection : 'row',
-                justifyContent : 'flex-start',
-                alignItems : 'center',
-                borderBottomColor : 'gray',
-                borderBottomWidth : 1,
-                width : 300,
-            }}>
-                <Text style = {{
-                    marginRight : 20,
-                    fontSize : 25,
-                    color : 'white'
-                }}>{isEmail ? 'E' : 'P'}</Text>
+            <View style = {styles.textInputContainer}>
+                <Text style = {styles.textEP}>{isEmail ? 'E' : 'P'}</Text>
                 <TextInput
-                    style = {{
-                        fontSize : 20,
-                        paddingBottom : 0,
-                        paddingTop : 0,
-                        width : 200,
-                        height : 40,
-                        color : 'white',
-                    }}
+                    style = {styles.textInput}
                     secureTextEntry={isEmail ? false : this.state.security }
                     autoFocus
                     placeholder = {placeHolderText}
@@ -114,10 +86,10 @@ export default class Authentication extends Component{
         {
             return(
                 <TouchableOpacity 
-                    style ={{marginLeft : 35, alignContent : 'flex-end'}}
+                    style ={styles.hideButton}
                     onPress = {this.onPressHide}
                 >
-                    <Text style ={{color : '#19A3D2'}}>
+                    <Text style ={styles.hideButtonText}>
                         {!this.state.security ? 'Hide' : 'Show'}
                     </Text>
                 </TouchableOpacity>
@@ -136,18 +108,16 @@ export default class Authentication extends Component{
     {
         return(
             <View style = {styles.container}>
-                <View style = {{marginTop : screenHeight/4, marginBottom : 50}}>
+                <View style = {styles.top}>
                     {this.renderText()}
                 </View>
                 
-                <View style = {{
-                    flex : 1
-                }}>
+                <View style = {styles.mid}>
                     {this.renderTextInput('email@example.com', false)}
                     {this.renderTextInput('password', true)}
                 </View>
                 <View
-                style = {{flex : 5, justifyContent : 'flex-start'}}>
+                style = {styles.bottom}>
                     {this.renderButton('Sign In')}
                 </View>
                 
@@ -169,6 +139,54 @@ styles = StyleSheet.create(
         text : {
             fontSize : 24,
             color : 'white',
+        },
+        loginButton : {
+            alignItems : 'center',
+            justifyContent : 'center',
+            width : 300,
+            height : 50,
+            backgroundColor : '#19A3D2',
+            marginTop : 20  
+        },
+        textLogin : {
+            fontSize : 20,
+            color : 'white',
+        },
+        textInputContainer : {
+            flexDirection : 'row',
+            justifyContent : 'flex-start',
+            alignItems : 'center',
+            borderBottomColor : 'gray',
+            borderBottomWidth : 1,
+            width : 300,
+        },
+        textEP : {
+            marginRight : 20,
+            fontSize : 25,
+            color : 'white'
+        },
+        textInput : {
+            fontSize : 20,
+            paddingBottom : 0,
+            paddingTop : 0,
+            width : 200,
+            height : 40,
+            color : 'white',
+        },
+        hideButton : {
+            marginLeft : 35, alignContent : 'flex-end'
+        },
+        top : {
+            marginTop : screenHeight/4, marginBottom : 50
+        },
+        mid : {
+            flex : 1
+        },
+        bottom : {
+            flex : 5, justifyContent : 'flex-start'
+        },
+        hideButtonText : {
+            color : '#19A3D2'
         }
     }
 )
