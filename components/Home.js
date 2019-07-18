@@ -1,17 +1,14 @@
 import React ,{Component} from 'react'
-import {Text, View, TextInput, TouchableOpacity, StyleSheet, Alert, Dimensions, Keyboard,
-    Image, FlatList} from 'react-native'
-import Icon from "react-native-vector-icons/Entypo";
-import Ic from 'react-native-vector-icons/Ionicons'
-import Ic1 from 'react-native-vector-icons/MaterialCommunityIcons'
-import { createStackNavigator, createAppContainer , createSwitchNavigator} from 'react-navigation';
-
-const screenHeight = Dimensions.get('window').height
-const screenWidth = Dimensions.get('window').width
-
+import {Text, View, TouchableOpacity, FlatList} from 'react-native'
+import EntypoIcon from "react-native-vector-icons/Entypo";
+import IoniconsIcon from 'react-native-vector-icons/Ionicons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import {iconList} from '../Consts'
+import {styles} from '../style/HomeStyle'
 
 class MyListItem extends Component
 {
+    
     constructor(props)
     {
         super(props)
@@ -20,22 +17,43 @@ class MyListItem extends Component
     {
         const { icon } = this.props
         return(
-            <View style = {{width : screenWidth/4, 
-                            height : screenWidth/4, 
-                            backgroundColor : "white",
-                            marginRight : 10, 
-                            marginLeft : 20, 
-                            marginTop : 20,
-                            alignItems : 'center', 
-                            justifyContent : 'center',
-                            borderRadius : 10
-            }}>
-            <TouchableOpacity style ={{}}>
-            <Ic1
+            <View style = {styles.item}>
+            <TouchableOpacity>
+            <MaterialCommunityIcons
                 name={icon.name}
                 color={icon.color}
                 size={25}
                 />
+            </TouchableOpacity>
+            </View>
+        )
+    }
+}
+class TwiteerListItem extends Component
+{
+    
+    constructor(props)
+    {
+        super(props)
+        this.onPressItem = this.onPressItem.bind(this)
+    }
+    onPressItem(title)
+    {
+        this.props.parent.props.navigation.navigate('detail', {
+            content : title
+        })
+    }
+    render()
+    {
+        const { index } = this.props
+        return(
+            <View style = {styles.twiteerListItem}>
+            <TouchableOpacity 
+                onPress = {() => {this.onPressItem(this.props.item.title)}}
+            >
+            <Text>
+                {this.props.item.title}
+            </Text>
             </TouchableOpacity>
             </View>
         )
@@ -46,30 +64,43 @@ export default class Home extends Component
     // static navigationOptions = {
     //     header: null
     // }
+    static navigationOptions = {
+        drawerLabel: 'Home',
+        drawerIcon: ({ tintColor }) => (
+          <IoniconsIcon
+            name="md-home"
+            color="green"
+            size={25}
+          />
+        ),
+      }
     constructor(props)
     {
         super(props)
         this.state = {
-            userEmail : ''
+            userEmail : '',
+            twitter : []
         }
+        this.openDrawer = this.openDrawer.bind(this)
+    }
+    openDrawer()
+    {
+        this.props.navigation.openDrawer()
     }
     renderTop()
     {
-        const itemId = this.props.navigation.getParam('email');
-        console.log(`hello ${itemId}`)
+        const email = this.props.navigation.getParam('email');
+        console.log(`hello ${email}`)
         return(
-            <View style = {{flexDirection : 'row', 
-                    alignItems : 'baseline', 
-                    justifyContent : 'flex-start', 
-                    backgroundColor : '#534C9C',
-                    height : screenHeight / 4
-                }}
+            <View style = {styles.top}
             >
                 <View
                 style = {{marginTop : 70}}
                 ></View>
-                <TouchableOpacity style ={{marginRight : 20, marginLeft : 20}}>
-                <Icon
+                <TouchableOpacity style ={styles.drawerButton}
+                    onPress = { ()=> {this.openDrawer()}}
+                >
+                <EntypoIcon
                     name="menu"
                     color="white"
                     size={25}
@@ -82,22 +113,22 @@ export default class Home extends Component
                 }}>
                     Home Page
                 </Text>
-                <TouchableOpacity style ={{marginRight : 20, marginLeft : 70}}>
-                <Ic
+                <TouchableOpacity style ={styles.notificationButton}>
+                <IoniconsIcon
                     name="ios-notifications-outline"
                     color="white"
                     size={25}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style ={{marginRight : 20, marginLeft : 20}}>
-                <Ic
+                <TouchableOpacity style ={styles.personButton}>
+                <IoniconsIcon
                     name="ios-person"
                     color="white"
                     size={25}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style ={{marginRight : 20, marginLeft : 20}}>
-                <Ic
+                <TouchableOpacity style ={styles.settingButton}>
+                <IoniconsIcon
                     name="md-settings"
                     color="white"
                     size={25}
@@ -108,42 +139,61 @@ export default class Home extends Component
     }
     renderMidler()
     {
-        const iconList = [{name : "email", color : "#BFD3BB"},
-                          {name : "email-alert", color : "#BAE3EA"},
-                          {name : "email-box", color : "#FCE8AB"},
-                          {name : "email-check", color : '#EFC0CE'},
-                          {name : "email-box", color : "#FCE8AB"},
-                          {name : "email-check", color : '#EFC0CE'}]
         return(
             <FlatList
-                style = {{
-
-                }}
                 data = {iconList}
                 renderItem = {({item, index}) =>
                 (
                     <MyListItem icon = {item}>
-
                     </MyListItem>
                 )
-                
                 }
                 numColumns = {3}
             >
-
             </FlatList>
         )
+    }
+    renderBottom()
+    {
+        return(
+            <FlatList
+                data = {this.state.twitter}
+                renderItem = {({item, index}) =>
+                (
+                    <TwiteerListItem item = {item} index = {index} parent = {this}>
+                    </TwiteerListItem>
+                )
+                }
+                numColumns = {1}
+            >
+            </FlatList>
+        )
+    }
+    componentDidMount()
+    {
+        fetch("https://jsonplaceholder.typicode.com/todos")
+        .then(response => response.json())
+        .then(json => {
+          console.log(json)
+          this.setState({
+              twitter : json
+          })
+        });
     }
     render()
     {
         return(
-            <View style = {{flex : 1}}>
+            <View style = {styles.container}>
                 {this.renderTop()}
-                <View style = {{flexDirection : 'row', backgroundColor : "#F9F7FF", height : screenHeight / 3, alignItems : 'center', justifyContent : 'center'}}>
+                <View style = {styles.mid}>
                     {this.renderMidler()}
                 </View>
-                
+                <Text style = {styles.switterFeedsText}>
+                    Twitter Feeds
+                </Text>  
+                {this.renderBottom()}             
             </View>
         )
     }
 }
+

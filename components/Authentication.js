@@ -1,15 +1,25 @@
 import React ,{Component} from 'react'
-import {Text, View, TextInput, TouchableOpacity, StyleSheet, Alert, Dimensions, Keyboard,
-    KeyboardAvoidingView} from 'react-native'
-import { createStackNavigator, createAppContainer, createSwitchNavigator} from 'react-navigation';
-screenWidth = Dimensions.get('window').width
-screenHeight = Dimensions.get('window').height
-const userName = 'Hung'
-const pass = '1234'
+import {Text, View, TextInput, TouchableOpacity, Alert, Dimensions} from 'react-native'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import {screenHeight, screenWidth} from '../Consts'
+
+import {
+    userName,
+    pass
+} from '../Consts'
+import {styles} from '../style/AuthenticationStyle'
 export default class Authentication extends Component{
     static navigationOptions = {
+        drawerLabel: 'Logout',
+        drawerIcon: ({ tintColor }) => (
+          <MaterialCommunityIcons
+            name="logout"
+            color="yellow"
+            size={25}
+          />
+        ),
         header: null
-    }
+      }
     constructor(props)
     {
         super(props);
@@ -47,19 +57,9 @@ export default class Authentication extends Component{
         return(
             <TouchableOpacity 
                 onPress = {this.onPressLoginButton}
-                style = {{
-                    alignItems : 'center',
-                    justifyContent : 'center',
-                    width : 300,
-                    height : 50,
-                    backgroundColor : '#19A3D2',
-                    marginTop : 20  
-                }}
+                style = {styles.loginButton}
             >
-                <Text style = {{
-                    fontSize : 20,
-                    color : 'white',
-                }}>
+                <Text style = {styles.textLogin}>
                     {buttonName}
                 </Text>
             </TouchableOpacity>
@@ -69,31 +69,15 @@ export default class Authentication extends Component{
     {
         const isEmail = placeHolderText === 'email@example.com'
         return(
-            <View style = {{
-                flexDirection : 'row',
-                justifyContent : 'flex-start',
-                alignItems : 'center',
-                borderBottomColor : 'gray',
-                borderBottomWidth : 1,
-                width : 300,
-            }}>
-                <Text style = {{
-                    marginRight : 20,
-                    fontSize : 25,
-                    color : 'white'
-                }}>{isEmail ? 'E' : 'P'}</Text>
+            <View style = {styles.textInputContainer}>
+                <Text style = {styles.textEP}>{isEmail ? 'E' : 'P'}</Text>
                 <TextInput
-                    style = {{
-                        fontSize : 20,
-                        paddingBottom : 0,
-                        paddingTop : 0,
-                        width : 200,
-                        height : 40,
-                        color : 'white',
-                    }}
+                    style = {styles.textInput}
                     secureTextEntry={isEmail ? false : this.state.security }
                     autoFocus
                     placeholder = {placeHolderText}
+                    placeholderTextColor = 'gray'
+                    autoCapitalize = 'none'
                     onChangeText = {
                         (text) =>
                         {
@@ -114,10 +98,10 @@ export default class Authentication extends Component{
         {
             return(
                 <TouchableOpacity 
-                    style ={{marginLeft : 35, alignContent : 'flex-end'}}
+                    style ={styles.hideButton}
                     onPress = {this.onPressHide}
                 >
-                    <Text style ={{color : '#19A3D2'}}>
+                    <Text style ={styles.hideButtonText}>
                         {!this.state.security ? 'Hide' : 'Show'}
                     </Text>
                 </TouchableOpacity>
@@ -136,18 +120,16 @@ export default class Authentication extends Component{
     {
         return(
             <View style = {styles.container}>
-                <View style = {{marginTop : screenHeight/4, marginBottom : 50}}>
+                <View style = {styles.top}>
                     {this.renderText()}
                 </View>
                 
-                <View style = {{
-                    flex : 1
-                }}>
+                <View style = {styles.mid}>
                     {this.renderTextInput('email@example.com', false)}
                     {this.renderTextInput('password', true)}
                 </View>
                 <View
-                style = {{flex : 5, justifyContent : 'flex-start'}}>
+                style = {styles.bottom}>
                     {this.renderButton('Sign In')}
                 </View>
                 
@@ -156,19 +138,3 @@ export default class Authentication extends Component{
     }
     
 }
-styles = StyleSheet.create(
-    {
-        container : {
-            flex : 1,
-            flexDirection : 'column',
-            alignItems : 'center',
-            justifyContent : 'center',
-            backgroundColor : '#404886',
-        }
-        ,
-        text : {
-            fontSize : 24,
-            color : 'white',
-        }
-    }
-)
