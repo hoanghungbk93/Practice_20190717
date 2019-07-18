@@ -1,11 +1,12 @@
 import React ,{Component} from 'react'
-import {Text, View, TextInput, TouchableOpacity, StyleSheet, Alert, Dimensions, Keyboard,
-    KeyboardAvoidingView} from 'react-native'
-import { createStackNavigator, createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {Text, View, TextInput, TouchableOpacity, Alert, Dimensions} from 'react-native'
 screenWidth = Dimensions.get('window').width
 screenHeight = Dimensions.get('window').height
-const userName = 'Hung'
-const pass = '1234'
+import {
+    userName,
+    pass
+} from '../Consts'
+import {styles} from '../style/AuthenticationStyle'
 export default class Authentication extends Component{
     static navigationOptions = {
         header: null
@@ -126,67 +127,3 @@ export default class Authentication extends Component{
     }
     
 }
-styles = StyleSheet.create(
-    {
-        container : {
-            flex : 1,
-            flexDirection : 'column',
-            alignItems : 'center',
-            justifyContent : 'center',
-            backgroundColor : '#404886',
-        }
-        ,
-        text : {
-            fontSize : 24,
-            color : 'white',
-        },
-        loginButton : {
-            alignItems : 'center',
-            justifyContent : 'center',
-            width : 300,
-            height : 50,
-            backgroundColor : '#19A3D2',
-            marginTop : 20  
-        },
-        textLogin : {
-            fontSize : 20,
-            color : 'white',
-        },
-        textInputContainer : {
-            flexDirection : 'row',
-            justifyContent : 'flex-start',
-            alignItems : 'center',
-            borderBottomColor : 'gray',
-            borderBottomWidth : 1,
-            width : 300,
-        },
-        textEP : {
-            marginRight : 20,
-            fontSize : 25,
-            color : 'white'
-        },
-        textInput : {
-            fontSize : 20,
-            paddingBottom : 0,
-            paddingTop : 0,
-            width : 200,
-            height : 40,
-            color : 'white',
-        },
-        hideButton : {
-            marginLeft : 35, alignContent : 'flex-end'
-        },
-        top : {
-            marginTop : screenHeight/4, marginBottom : 50
-        },
-        mid : {
-            flex : 1
-        },
-        bottom : {
-            flex : 5, justifyContent : 'flex-start'
-        },
-        hideButtonText : {
-            color : '#19A3D2'
-        }
-    }
-)

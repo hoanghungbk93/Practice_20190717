@@ -1,6 +1,6 @@
 import React, {Component}from "react";
-import { View, Text, TouchableOpacity, Dimensions} from "react-native";
-import { createStackNavigator, createAppContainer, createSwitchNavigator, createDrawerNavigator} from "react-navigation";
+import { View, Text, TouchableOpacity} from "react-native";
+import { createAppContainer, createSwitchNavigator, createDrawerNavigator} from "react-navigation";
 import Home from './components/Home'
 import Icon from "react-native-vector-icons/Entypo"
 import Authentication from './components/Authentication'
