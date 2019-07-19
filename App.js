@@ -34,16 +34,27 @@ class Detail extends Component
   {
     const {navigation} = this.props
     const content = navigation.getParam('content')
+    const header = navigation.getParam('header')
     return(
+        <View
+        style = {{
+              flex : 1,
+              flexDirection : 'column', 
+              alignItems : 'flex-start', 
+              justifyContent : 'flex-start', 
+              backgroundColor : '#534C9C',
+          }}
+        >
         <View style = {{
-                    flex : 1,
+                    height : 70,
                     flexDirection : 'row', 
                     alignItems : 'flex-start', 
                     justifyContent : 'flex-start', 
                     backgroundColor : '#534C9C',
+                    marginTop : 30
                 }}
             >
-                <TouchableOpacity style ={{marginRight : 20, marginLeft : 20, marginTop : 70}}
+                <TouchableOpacity style ={{marginRight : 20, marginLeft : 20}}
                     onPress = {()=> {this.openDrawer()}}
                 >
                 <Icon
@@ -55,17 +66,28 @@ class Detail extends Component
                 <Text style = {{
                     fontSize : 25,
                     color : 'white',
-                    marginTop : 70
+            
                   }}
                 >
                   Detail
                 </Text>
+                
+          </View>
+                <Text style = {{
+                    fontSize : 30,
+                    color : 'white',
+                    marginLeft : 20,
+                    fontWeight : 'bold'
+                  }}>
+                  {header.charAt(0).toUpperCase() + header.slice(1)}
+                </Text>
                 <Text style = {{
                     fontSize : 25,
                     color : 'white',
-                    marginTop : 170
+                    marginLeft : 20,
+                    marginTop : 20
                   }}>
-                  {content}
+                  {content.charAt(0).toUpperCase() + content.slice(1)}
                 </Text>
           </View>
     )

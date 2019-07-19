@@ -54,6 +54,7 @@ export const styles = StyleSheet.create(
             marginTop : screenHeight/4, marginBottom : 50
         },
         mid : {
+            marginTop : 50,
             flex : 1
         },
         bottom : {
