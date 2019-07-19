@@ -13,7 +13,7 @@ export const styles = StyleSheet.create(
             marginRight : 10, 
             marginLeft : 20, 
             marginTop : 20,
-            alignItems : 'center', 
+            alignItems : 'center',
             justifyContent : 'center',
             borderRadius : 10
         },
@@ -59,6 +59,9 @@ export const styles = StyleSheet.create(
             borderBottomWidth : 1,
             marginTop : 10,
             marginBottom : 10
+        },
+        title : {
+            marginLeft : 10
         }
     }
 )

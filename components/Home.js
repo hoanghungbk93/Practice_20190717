@@ -37,22 +37,23 @@ class TwiteerListItem extends Component
         super(props)
         this.onPressItem = this.onPressItem.bind(this)
     }
-    onPressItem(title)
+    onPressItem(item)
     {
         this.props.parent.props.navigation.navigate('detail', {
-            content : title
+            content : item.body,
+            header : item.title
         })
     }
     render()
     {
-        const { index } = this.props
+        const { index, item } = this.props
         return(
             <View style = {styles.twiteerListItem}>
             <TouchableOpacity 
-                onPress = {() => {this.onPressItem(this.props.item.title)}}
+                onPress = {() => {this.onPressItem(item)}}
             >
-            <Text>
-                {this.props.item.title}
+            <Text style = {styles.title}>
+                {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
             </Text>
             </TouchableOpacity>
             </View>
@@ -171,7 +172,7 @@ export default class Home extends Component
     }
     componentDidMount()
     {
-        fetch("https://jsonplaceholder.typicode.com/todos")
+        fetch("https://jsonplaceholder.typicode.com/posts")
         .then(response => response.json())
         .then(json => {
           console.log(json)
