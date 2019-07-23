@@ -1,4 +1,4 @@
-import React, {Component}from "react";
+import React, {Component} from "react";
 import { View, Text, TouchableOpacity} from "react-native";
 import { createAppContainer, createSwitchNavigator, createDrawerNavigator} from "react-navigation";
 import Home from './components/Home'

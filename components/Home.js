@@ -5,11 +5,12 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {iconList} from '../Consts'
 import {styles} from '../style/HomeStyle'
+import {connect} from 'react-redux'
 
 class MyListItem extends Component
 {
     
-    constructor(props)
+   constructor(props)
     {
         super(props)
     }
@@ -60,7 +61,7 @@ class TwiteerListItem extends Component
         )
     }
 }
-export default class Home extends Component
+class Home extends Component
 {
     // static navigationOptions = {
     //     header: null
@@ -112,7 +113,7 @@ export default class Home extends Component
                     fontSize : 25,
                     color : 'white'
                 }}>
-                    Home Page
+                    {this.props.userNames}
                 </Text>
                 <TouchableOpacity style ={styles.notificationButton}>
                 <IoniconsIcon
@@ -158,7 +159,9 @@ export default class Home extends Component
     {
         return(
             <FlatList
-                data = {this.state.twitter}
+                // data = {this.state.twitter}
+                // data = {this.props.data}
+                data = {[]}
                 renderItem = {({item, index}) =>
                 (
                     <TwiteerListItem item = {item} index = {index} parent = {this}>
@@ -197,4 +200,12 @@ export default class Home extends Component
         )
     }
 }
-
+const mapStateToProps = (state) =>
+{
+    return{
+        userNames : state.loginReducer.userNames,
+        data : state.fetchReducer.data
+    }
+}
+export default  connect(mapStateToProps)(Home)
+ 

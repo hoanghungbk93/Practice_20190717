@@ -2,13 +2,14 @@ import React ,{Component} from 'react'
 import {Text, View, TextInput, TouchableOpacity, Alert, Dimensions} from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {screenHeight, screenWidth} from '../Consts'
-
+import {connect} from 'react-redux'
+import {login} from '../actions/login'
 import {
     userName,
     pass
 } from '../Consts'
 import {styles} from '../style/AuthenticationStyle'
-export default class Authentication extends Component{
+class Authentication extends Component{
     static navigationOptions = {
         drawerLabel: 'Logout',
         drawerIcon: ({ tintColor }) => (
@@ -34,6 +35,17 @@ export default class Authentication extends Component{
     componentDidMount(){
         // Keyboard.dismiss();
     }
+    // UNSAFE_componentWillReceiveProps(nextProps)
+    // {
+    //     if(nextProps.userNames === userName && this.state.password === pass)
+    //     {
+    //         nextProps.navigation.navigate('home', {email : this.state.username})
+            
+    //     }
+    //     else{
+    //         Alert.alert('login fail')
+    //     }   
+    // }
     renderText()
     {
         return (
@@ -42,11 +54,16 @@ export default class Authentication extends Component{
             </Text>   
         )
     }
-    onPressLoginButton()
-    {
+    onPressLoginButton() {
+        console.log('this.props.userName')
+        if(this.state.username.trim() === '') {
+            return;
+          }
+        this.props.loginn(this.state.username)
         if(this.state.username === userName && this.state.password === pass)
         {
             this.props.navigation.navigate('home', {email : this.state.username})
+            
         }
         else{
             Alert.alert('login fail')
@@ -116,8 +133,8 @@ export default class Authentication extends Component{
     {
         this.setState(previousState => ({security : !previousState.security}))
     }
-    render()
-    {
+    render() {
+        console.log('CHECK USER NAME', this.props.userNames)
         return(
             <View style = {styles.container}>
                 <View style = {styles.top}>
@@ -138,3 +155,20 @@ export default class Authentication extends Component{
     }
     
 }
+const mapStateToProps = (state) =>
+{
+    return{
+        userNames : state.loginReducer.userNames
+    }
+}
+const mapDispatchToProps = (dispatch) =>
+{
+    return {
+        loginn: (userNames) => 
+        {
+            dispatch(login(userNames))
+        }
+    }
+}
+
+export default  connect(mapStateToProps, mapDispatchToProps)(Authentication)
