@@ -1,5 +1,5 @@
 import React ,{Component} from 'react'
-import {Text, View, TextInput, TouchableOpacity, Alert, Dimensions} from 'react-native'
+import {Text, View, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, Keyboard} from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {screenHeight, screenWidth} from '../Consts'
 import {connect} from 'react-redux'
@@ -33,7 +33,7 @@ class Authentication extends Component{
         this.onPressHide = this.onPressHide.bind(this)
     }
     componentDidMount(){
-        // Keyboard.dismiss();
+        Keyboard.dismiss();
     }
     // UNSAFE_componentWillReceiveProps(nextProps)
     // {
@@ -136,9 +136,11 @@ class Authentication extends Component{
     render() {
         console.log('CHECK USER NAME', this.props.userNames)
         return(
+            // <KeyboardAvoidingView>
             <View style = {styles.container}>
-                <View style = {styles.top}>
-                    {this.renderText()}
+                <ScrollView keyboardShouldPersistTaps='handled'>
+                <View style = {styles.top} >
+                    {this.renderText()}    
                 </View>
                 
                 <View style = {styles.mid}>
@@ -149,8 +151,9 @@ class Authentication extends Component{
                 style = {styles.bottom}>
                     {this.renderButton('Sign In')}
                 </View>
-                
+                </ScrollView>   
             </View>    
+            // {/* </KeyboardAvoidingView> */}
         )
     }
     

@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {iconList} from '../Consts'
 import {styles} from '../style/HomeStyle'
 import {connect} from 'react-redux'
-
+import {thunk_action_creator} from '../actions/fetch'
 class MyListItem extends Component
 {
     
@@ -38,11 +38,10 @@ class TwiteerListItem extends Component
         super(props)
         this.onPressItem = this.onPressItem.bind(this)
     }
-    onPressItem(item)
+    onPressItem(index)
     {
         this.props.parent.props.navigation.navigate('detail', {
-            content : item.body,
-            header : item.title
+            index : index,
         })
     }
     render()
@@ -51,7 +50,7 @@ class TwiteerListItem extends Component
         return(
             <View style = {styles.twiteerListItem}>
             <TouchableOpacity 
-                onPress = {() => {this.onPressItem(item)}}
+                onPress = {() => {this.onPressItem(index)}}
             >
             <Text style = {styles.title}>
                 {item.title.charAt(0).toUpperCase() + item.title.slice(1)}
@@ -91,8 +90,6 @@ class Home extends Component
     }
     renderTop()
     {
-        const email = this.props.navigation.getParam('email');
-        console.log(`hello ${email}`)
         return(
             <View style = {styles.top}
             >
@@ -160,8 +157,8 @@ class Home extends Component
         return(
             <FlatList
                 // data = {this.state.twitter}
-                // data = {this.props.data}
-                data = {[]}
+                data = {this.props.data}
+                // data = {[]}
                 renderItem = {({item, index}) =>
                 (
                     <TwiteerListItem item = {item} index = {index} parent = {this}>
@@ -175,14 +172,15 @@ class Home extends Component
     }
     componentDidMount()
     {
-        fetch("https://jsonplaceholder.typicode.com/posts")
-        .then(response => response.json())
-        .then(json => {
-          console.log(json)
-          this.setState({
-              twitter : json
-          })
-        });
+        // fetch("https://jsonplaceholder.typicode.com/posts")
+        // .then(response => response.json())
+        // .then(json => {
+        //   console.log(json)
+        //   this.setState({
+        //       twitter : json
+        //   })
+        // });
+        this.props.dispatch(thunk_action_creator())
     }
     render()
     {

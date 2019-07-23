@@ -48,7 +48,7 @@ export const styles = StyleSheet.create(
             color : 'white',
         },
         hideButton : {
-            marginLeft : 35, alignContent : 'flex-end'
+            marginLeft : 30, alignContent : 'flex-end'
         },
         top : {
             marginTop : screenHeight/4, marginBottom : 50
@@ -61,7 +61,8 @@ export const styles = StyleSheet.create(
             flex : 5, justifyContent : 'flex-start'
         },
         hideButtonText : {
-            color : '#19A3D2'
+            color : '#19A3D2',
+            marginRight : 0
         }
     }
 )

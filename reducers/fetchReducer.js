@@ -3,8 +3,10 @@ import {FETCHED_USER, RECEIVE_ERROR} from '../actions/type'
 const initialState = {
     data : []
 }
-const loginReducer = (state = initialState, action) =>
+const fetchReducer = (state = initialState, action) =>
 {
+
+    console.log("hihhhihihi")
     switch(action.type)
     {
         case FETCHED_USER : {
@@ -17,4 +19,4 @@ const loginReducer = (state = initialState, action) =>
         
     }
 }
-export default loginReducer
+export default fetchReducer
